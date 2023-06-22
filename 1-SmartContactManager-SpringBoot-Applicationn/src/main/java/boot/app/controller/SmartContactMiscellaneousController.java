@@ -13,7 +13,7 @@ public class SmartContactMiscellaneousController {
 
 	@GetMapping("/")
 	public String getIndex(Map<String, Object> map) {
-		return "pages/welcome";
+		return "welcome";
 	}
 
 
