@@ -19,10 +19,24 @@ public class ShowContactServiceIMPL implements IShowContactService {
 	@Autowired
 	private IContactDetailsRepository conRepo;
 
-		@Override
+	@Override
 	public Page<ContactDetails> showAllContacts(Pageable pageable) {
 
 		return conRepo.findAll(pageable);
+	}
+	
+	
+	ContactDetails d = null;
+
+	@Override
+	public ContactDetails getAllContactDetailsById(Integer id) {
+		Optional<ContactDetails> op = conRepo.findById(id);
+		if (op.isPresent()) {
+			d = op.get();
+		}
+
+		return d;
+	
 	}
 
 }

@@ -9,9 +9,12 @@ import org.springframework.data.domain.Pageable;
 import boot.app.entity.ContactDetails;
 
 public interface IShowContactService {
-	
-	
-	
+
+	//Showing All Contacts Partially
 	public Page<ContactDetails> showAllContacts(Pageable pageable);
+	
+	//Showing Contact Details By Clicking on More Hyperlink
+	public ContactDetails getAllContactDetailsById(Integer id) ;
+	
 
 }

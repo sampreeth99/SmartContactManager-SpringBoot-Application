@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import boot.app.ShowContact.service.IShowContactService;
@@ -79,6 +80,19 @@ public class ContactManagementController {
 
 		return "ShowContacts";
 	}
+	
+	
+	@GetMapping("/moreContactInfo")
+	public String moreInfo(@RequestParam Integer cid, Map<String, Object> map) {
+
+		ContactDetails d = showService.getAllContactDetailsById(cid);
+		map.put("contact", d);
+
+		return "moreInfo";
+	}
+
+	
+	
 
 
 	
