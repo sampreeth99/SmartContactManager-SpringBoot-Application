@@ -1,7 +1,12 @@
 package boot.app.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
@@ -15,9 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import boot.app.ShowContact.service.IShowContactService;
 import boot.app.addcontact.service.IAddContactService;
+import boot.app.contact.file.download.IContactFileDownloadService;
 import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/management")
@@ -31,6 +41,11 @@ public class ContactManagementController {
 	
 	@Autowired
 	private IShowContactService showService;
+	
+	@Autowired
+	private IContactFileDownloadService downService;
+	
+	
 	
 	
 
@@ -87,9 +102,40 @@ public class ContactManagementController {
 
 		ContactDetails d = showService.getAllContactDetailsById(cid);
 		map.put("contact", d);
+		
+		String name = downService.oNameOfPic(cid);
+		map.put("pic", name);
+		
 
 		return "moreInfo";
 	}
+	
+	@GetMapping("/download")
+	public String downloadImage(@RequestParam Integer id, HttpServletResponse res, HttpServletRequest req)
+			throws IOException {
+
+		String pathName = downService.getPaths(id);
+		System.out.println(pathName);
+		File f = new File(pathName);
+		ServletContext sc = req.getServletContext();
+		try {
+			FileInputStream fi = new FileInputStream(f);
+			long len = f.length();
+			ServletOutputStream s = res.getOutputStream();
+			res.setContentLengthLong(len);
+			String mime = sc.getMimeType("f");
+			// mime=mime==null?"application/octet-stream":mime;
+			res.setContentType(mime);
+			System.out.println(mime);
+			res.setHeader("Content-Disposition", "attachment;filename=" + f.getName());
+			IOUtils.copy(fi, s);
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 	
 	
