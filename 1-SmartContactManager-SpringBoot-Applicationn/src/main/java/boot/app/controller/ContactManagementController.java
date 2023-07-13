@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
@@ -134,6 +135,20 @@ public class ContactManagementController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+
+	@GetMapping("/edit")
+	public String showEditFormPage(@ModelAttribute("cm") ContactDetails con, @RequestParam Integer no) {
+		// Object[] or=showService.showParticularDetails(no);
+
+		ContactDetails d = showService.getAllContactDetailsById(no);
+		BeanUtils.copyProperties(d, con, "profilePicPath", "originalPicName");
+
+		// System.out.println("From edit link:::"+obj);
+		System.out.println("ContactManagementController.showEditFormPage()");
+		return "editForm";
 	}
 
 
