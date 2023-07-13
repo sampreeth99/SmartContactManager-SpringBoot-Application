@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
 import boot.app.addcontact.service.IAddContactService;
 import boot.app.contact.file.download.IContactFileDownloadService;
@@ -45,6 +46,11 @@ public class ContactManagementController {
 	
 	@Autowired
 	private IContactFileDownloadService downService;
+	
+	@Autowired
+	private IEditContactService editService;
+	
+	
 	
 	
 	
@@ -149,6 +155,22 @@ public class ContactManagementController {
 		// System.out.println("From edit link:::"+obj);
 		System.out.println("ContactManagementController.showEditFormPage()");
 		return "editForm";
+	}
+
+	@PostMapping("/edit/submit")
+	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con, Map<String, Object> map,
+			RedirectAttributes r) {
+
+		System.out.println("from edit submit::" + con);
+
+		String oname = downService.oNameOfPic(con.getCId());
+		String p = downService.getPaths(con.getCId());
+
+
+		String editmsg = editService.editContactById(con);
+		map.put("editMsg", editmsg);
+		r.addFlashAttribute("editMsg", editmsg);
+		return "welcome";
 	}
 
 
