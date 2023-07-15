@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import boot.app.DeleteContact.service.IDeleteContactService;
 import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
 import boot.app.addcontact.service.IAddContactService;
@@ -49,6 +50,11 @@ public class ContactManagementController {
 	
 	@Autowired
 	private IEditContactService editService;
+	
+	@Autowired
+	private IDeleteContactService deleteService;
+	
+	
 	
 	
 	
@@ -172,6 +178,17 @@ public class ContactManagementController {
 		r.addFlashAttribute("editMsg", editmsg);
 		return "welcome";
 	}
+	
+	
+	@GetMapping("/delete")
+	public String deleteContactById(@RequestParam Integer no1, Map<String, Object> map) {
+		String msg = deleteService.removeById(no1);
+		map.put("delMsg", msg);
+		map.put("note",
+				"Contact is Deleted Temporarily ... Deleted Contacts will be saved for Further references & Will Be Available In 'Trash' Section ");
+		return "del";
+	}
+
 
 
 	
