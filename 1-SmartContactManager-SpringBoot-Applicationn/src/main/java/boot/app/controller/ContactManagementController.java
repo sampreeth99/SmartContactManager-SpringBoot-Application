@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import boot.app.EditContact.service.IEditContactService;
@@ -26,6 +28,7 @@ import boot.app.contact.file.download.IContactFileDownloadService;
 import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
+import boot.app.repository.IContactDetailsRepository;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,6 +53,8 @@ public class ContactManagementController {
 	@Autowired
 	private IEditContactService editService;
 	
+	@Autowired
+	private IContactDetailsRepository repo;
 	
 	
 	
@@ -142,6 +147,33 @@ public class ContactManagementController {
 		}
 		return null;
 	}
+	
+
+	@PostMapping("/profilesave")
+	public String updateProfilePicture(@RequestParam("profile") MultipartFile profile, @RequestParam Integer uploadid) {
+		System.out.println("req param is::" + profile.getName());
+		System.out.println("uploadId::" + uploadid);
+
+		Optional<ContactDetails> op = repo.findById(uploadid);
+		ContactDetails cf = null;
+		if (op.isPresent()) {
+			cf = op.get();
+
+		}
+
+		ContactDetails c = new ContactDetails();
+		c.setCId(uploadid);
+		c.setCName(cf.getCName());
+		c.setCNickName(cf.getCNickName());
+		c.setCNo(cf.getCNo());
+		c.setAbout(cf.getAbout());
+		c.setDest(cf.getDest());
+		Boolean f = fileUpService.uploadProfilePicToServerFolder(profile, c);
+		System.out.println("change profile result::" + f);
+
+		return "redirect:moreContactInfo?cid="+uploadid;
+	}
+
 	
 	
 
