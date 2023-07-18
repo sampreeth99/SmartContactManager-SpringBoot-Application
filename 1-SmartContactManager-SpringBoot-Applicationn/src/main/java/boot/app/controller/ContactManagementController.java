@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
 import boot.app.repository.IContactDetailsRepository;
+import boot.app.validation.FormEDITValidation;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,6 +57,9 @@ public class ContactManagementController {
 	
 	@Autowired
 	private IContactDetailsRepository repo;
+	
+	@Autowired
+	private FormEDITValidation validEdit;
 	
 	
 	
@@ -191,18 +196,31 @@ public class ContactManagementController {
 
 	@PostMapping("/edit/submit")
 	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con, Map<String, Object> map,
-			RedirectAttributes r) {
+			RedirectAttributes r,BindingResult errors) {
 
+		if (validEdit.supports(ContactDetails.class)) {
+			validEdit.validate(con, errors);
+
+			if (errors.hasErrors()) {
+				System.out.println("Error count==" + errors.getErrorCount());
+				System.out.println(errors.getFieldError().toString());
+				return "editForm";
+			}
+		}
+		
 		System.out.println("from edit submit::" + con);
 
 		String oname = downService.oNameOfPic(con.getCId());
 		String p = downService.getPaths(con.getCId());
 
+		con.setOriginalPicName(oname);
+		con.setProfilePicPath(p);
 
 		String editmsg = editService.editContactById(con);
 		map.put("editMsg", editmsg);
 		r.addFlashAttribute("editMsg", editmsg);
 		return "welcome";
+
 	}
 
 
