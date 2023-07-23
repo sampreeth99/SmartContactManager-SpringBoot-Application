@@ -22,7 +22,7 @@ function CheckFileInput() {
 </head>
 <body class="text-center">
 
-      <h1 style="margin-top: 20px; margin-left: -30px;" >Change Profile Picture</h1>
+      <h1 style="margin-top: 20px; margin-left: -30px;" th:text="#{profile.change.heading}"></h1>
       
       <form th:action="@{/management/profilesave(uploadid=${uploadid})}" method="post" style="margin-top: 30px; font-size: 20px;" enctype="multipart/form-data">
          
@@ -30,7 +30,7 @@ function CheckFileInput() {
          
          <input  accept=".jpg"  type="file"  id="file" name="profile">
       
-         <button onsubmit="CheckFileInput()"   class="btn btn-primary" >Update Profile Pictcure</button>
+         <button onsubmit="CheckFileInput()"   class="btn btn-primary" th:text="#{button.form.submit}"></button>
       </form> 
       
 </body>

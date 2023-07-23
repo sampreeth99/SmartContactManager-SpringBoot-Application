@@ -20,7 +20,7 @@
 			class="card  text-danger fw-bold m-2 mt-4 p-2 text-center border-danger"
 			style="width: 900px; line-height: 52px; border-radius: 50px; background-color: pink;box-shadow: 18px 15px 5px grey;">
 			<div class="card-header">
-				<h3>Edit Contact</h3>
+				<h3 th:text="#{edit.form.title}"></h3>
 			</div>
 
 			<div class="card-body ">
@@ -42,7 +42,7 @@
 
 
 					<div>
-						<label for="cName" >Contact Name  </label>
+						<label for="cName" th:text="#{contactname.title}">  </label>
 						<div>
 							<input type="text" onblur="CheckNameInput()" id="cName" class="form-control " th:field="*{cName}">
 									<p class="text-dark" th:if="${#fields.hasErrors('cName')}"
@@ -52,7 +52,7 @@
 							</div>
 
 					<div>
-						<label for="cNickName"  > Nick Name </label>
+						<label for="cNickName"  th:text="#{contactnickname.title}">  </label>
 						<div id="input">
 							<input class="form-control" type="text" onblur="CheckNickNameInput()" th:field="*{cNickName}">
 							<p class="text-dark" th:if="${#fields.hasErrors('cNickName')}"
@@ -65,7 +65,7 @@
 
 
 					<div>
-						<label for="cNo"  > Contact Number </label>
+						<label for="cNo"  th:text="#{contactnumber.title}">  </label>
 						<div>
 							<input class="form-control " onblur="CheckContactNo()" type="number" th:field="*{cNo}">
 							<p class="text-dark" th:if="${#fields.hasErrors('cNo')}"
@@ -76,7 +76,7 @@
 					</div>
 
 					<div>
-						<label for="dest" > Contact Destination </label>
+						<label for="dest"  th:text="#{contactdest.title}"> </label>
 						<div>
 							<input class="form-control " type="text" onblur="CheckDestinationInput()" th:field="*{dest}">
 							<p class="text-dark" th:if="${#fields.hasErrors('dest')}"
@@ -88,7 +88,7 @@
 					
 										<div>
 						<div>
-							<label  >About</label>
+							<label th:text="#{contactabout.title}" ></label>
 						</div>
 						<textarea rows="1" cols="57" name="about" th:field="*{about}"
 							onblur="CheckAboutInput()"></textarea>
@@ -98,7 +98,7 @@
 					</div>
 					
 
- <button class="btn btn-dark w-100 mt-2" >Submit</button>
+ <button class="btn btn-dark w-100 mt-2" th:text="#{button.form.submit}"></button>
 				
                  </form>
 			</div>
