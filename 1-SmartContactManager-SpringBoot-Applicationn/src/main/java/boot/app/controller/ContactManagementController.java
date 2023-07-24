@@ -224,6 +224,11 @@ public class ContactManagementController {
 	}
 
 
+	@GetMapping("/report/menu")
+	public String showReportGenerationPage() {
+		return "reportMenu";
+	}
+
 	
 	
 
