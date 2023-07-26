@@ -5,8 +5,10 @@ import java.util.Locale;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 
 @SpringBootApplication
 public class Application {
@@ -26,6 +28,17 @@ public class Application {
 		l.setParamName("lang");
 		return l;
 	}
+	
+
+	@Bean
+	public BeanNameViewResolver createBNVR() {
+		BeanNameViewResolver b=new BeanNameViewResolver();
+		b.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		return b;
+	}
+	
+	
+	
 	
 
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -228,6 +229,22 @@ public class ContactManagementController {
 	public String showReportGenerationPage() {
 		return "reportMenu";
 	}
+
+	@GetMapping("/report")
+	public String report(@RequestParam String type, Map<String, Object> map) {
+		List<ContactDetails> con = showService.showAllCon();
+		map.put("conList", con);
+		if (type.equalsIgnoreCase("excel"))
+
+			return "xlReport";
+
+		else
+
+			return "PDFreport";
+
+	}
+
+
 
 	
 	

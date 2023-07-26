@@ -16,5 +16,8 @@ public interface IShowContactService {
 	//Showing Contact Details By Clicking on More Hyperlink
 	public ContactDetails getAllContactDetailsById(Integer id) ;
 	
+	public List<ContactDetails> showAllCon();
+	
+	
 
 }

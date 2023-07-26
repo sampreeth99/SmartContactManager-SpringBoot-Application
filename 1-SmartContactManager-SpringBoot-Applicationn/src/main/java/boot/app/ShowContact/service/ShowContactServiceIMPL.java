@@ -39,4 +39,10 @@ public class ShowContactServiceIMPL implements IShowContactService {
 	
 	}
 
+	
+	@Override
+	public List<ContactDetails> showAllCon() {
+		return conRepo.findAll();
+	}
+
 }
