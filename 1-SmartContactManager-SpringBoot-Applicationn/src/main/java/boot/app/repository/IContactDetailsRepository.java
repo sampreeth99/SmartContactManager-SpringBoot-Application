@@ -1,5 +1,7 @@
 package boot.app.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +16,10 @@ public interface IContactDetailsRepository extends JpaRepository<ContactDetails,
 	
 	@Query(value = " select profilePicPath from ContactDetails where cId=:id")
 	public String getPathById(Integer id);
+	
+	
+
+	public List<ContactDetails> findBycNameContaining(String characters);
 	
 
 }
