@@ -15,6 +15,7 @@ import boot.app.addcontact.service.IAddContactService;
 import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
+import boot.app.validation.FormADDValidation;
 
 @Controller
 @RequestMapping("/management")
@@ -26,6 +27,11 @@ public class ContactManagementController {
 	@Autowired
 	private FileUploadAddContactService fileUpService;
 
+	
+	@Autowired
+	private FormADDValidation valid;
+	
+	
 	// Showing Add Contact Form Page to User
 	@GetMapping("/add")
 	public String showAddFormPage(@ModelAttribute("cd") ContactManagerModel t) {
@@ -33,9 +39,19 @@ public class ContactManagementController {
 	}
 	
 	@PostMapping("/save")
-	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map,RedirectAttributes r) {
+	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map,
+			BindingResult errors) {
 		
-		
+		if (valid.supports(ContactManagerModel.class)) {
+			valid.validate(cd, errors);
+
+			if (errors.hasErrors()) {
+
+				return "addForm";
+			}
+
+		}
+
 		ContactDetails c = new ContactDetails();
 
 		c.setCName(cd.getCName());
@@ -44,9 +60,8 @@ public class ContactManagementController {
 		c.setDest(cd.getDest());
 		c.setAbout(cd.getAbout());
 
-		String addResult=addService.saveContact(c);
+		addService.saveContact(c);
 		
-		r.addFlashAttribute("addResult", addResult);
 		fileUpService.uploadProfilePicToServerFolder(cd.getProfilePicMultiPart(), c);
 
 		cd.setCName(null);
@@ -55,11 +70,8 @@ public class ContactManagementController {
 		cd.setDest(null);
 		cd.setAbout(null);
 
-		return "redirect:add";
+		return "addForm";
 	}
-
-	
-	
 
 	
 	

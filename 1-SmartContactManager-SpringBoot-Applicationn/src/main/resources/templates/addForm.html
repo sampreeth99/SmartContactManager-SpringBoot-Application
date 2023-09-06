@@ -42,6 +42,10 @@
 						<div>
 							<input id="cName" type="text" class="form-control  "
 								th:field="*{cName}">
+								
+													<p class="text-dark" th:if="${#fields.hasErrors('cName')}"
+								th:errors="*{cName}" />
+		
 						</div>
 									</div>
 
@@ -52,6 +56,11 @@
 						</label>
 						<div id="input">
 							<input class="form-control" type="text" th:field="*{cNickName}">
+							
+							
+							<p class="text-dark" th:if="${#fields.hasErrors('cNickName')}"
+								th:errors="*{cNickName}" />
+							
 
 						</div>
 					</div>
@@ -60,6 +69,9 @@
 						<label for="cNo" >Contact Number </label>
 						<div>
 							<input class="form-control  " type="number" th:field="*{cNo}">
+														<p class="text-dark" th:if="${#fields.hasErrors('cNo')}"
+								th:errors="*{cNo}" />
+							
 								</div>
 						
 					</div>
@@ -69,6 +81,8 @@
 						<div>
 							<input style="position: static;" class="form-control "
 								type="text" th:field="*{dest}">
+														<p class="text-dark" th:if="${#fields.hasErrors('dest')}"
+								th:errors="*{dest}" />
 							
 						</div>
 					</div>
@@ -79,10 +93,16 @@
 							<label >About</label>
 						</div>
 						<textarea rows="1" cols="57" name="about" th:field="*{about}"></textarea>
+												<p class="text-dark" th:if="${#fields.hasErrors('about')}"
+							th:errors="*{about}" />
 						
 											</div>
 					<div>
 						<input type="file" th:field="*{profilePicMultiPart}">
+						<p class="text-dark"
+							th:if="${#fields.hasErrors('profilePicMultiPart')}"
+							th:errors="*{profilePicMultiPart}" />
+			
 							</div>
 					<span class="text-primary" >NOTE:-Profile pic size must be max of 10 mb only</span>
 
