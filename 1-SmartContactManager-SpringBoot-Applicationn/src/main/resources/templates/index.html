@@ -42,17 +42,38 @@
     
     </header>
     <section >
-    <nav style="background-color: pink;height: 720px;border-radius: 10px;" class="ms-2">
+    <nav style="background-color: pink;height: 370px;border-radius: 10px;" >
     
-    <div id="navc" style="margin-top: 50px;font-size:35px;">
-   <a href="/management/add" target="_blank" ><button class="btn btn-dark  m-1"  style="height: 50px;width: 180px;" ><span class="bi bi-person-add m-2" style="font-size: 25px;padding: 3px;" ></span>Add Contacts</button></a>
+    <div id="navc" style="margin-top: 50px; "class="container-fluid">
+   <a href="/contactManager/" ><button class="btn btn-dark ms-4 " style="width:132 px; "  th:text="#{button.home}"><span class="bi bi-house-door-fill" ></span></button></a>
+ 
+  
+   <a href="/management/add" target="_blank" ><button class="btn btn-dark  mt-1"  style="width: 132px;" th:text="#{button.addcontacts}" ><span class="bi bi-person-add " style="font-size: 20px;" ></span></button></a>
+   
+     <a href="/management/showAllContactsByPage" ><button class="btn btn-dark  mt-1 " style="width: 132px " th:text="#{button.mycontacts}"><span class="bi bi-file-person-fill" style="font-size: 20px;" ></span></button></a>
+  
+  
+       <a href="/management/report/menu" target="_blank" ><button class="btn btn-dark  mt-1"  style="width: 132px;" th:text="#{button.report}" ><span class="bi bi-person-add " style="font-size: 20px;" ></span></button></a>
+   
+  
+  
    
    
+    
+  <details  class="bg-dark text-white mt-2" style="width: 130px;font-size: 20px;border-radius: 5px;">
+   <summary th:text="#{button.language}"></summary>
+  <button class="btn "> <a href="?lang=en_Us" class="ms-4" >English</a><br></button>
+  <button class="btn "> <a href="?lang=fr_FR" class="ms-4" >French</a></button> 
+   </details>  
+  
+      
    
       </div>
+   
+   
 
     </nav>
-    <main>
+       <main>
     
     
    
