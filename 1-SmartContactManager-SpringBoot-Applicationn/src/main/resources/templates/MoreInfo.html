@@ -82,22 +82,22 @@ dd {
 
 
 						<dl>
-							<dt>Nick Name</dt>
+							<dt th:text="#{contactnickname.title}"></dt>
 							<dd th:text="${cd.cNickName}"></dd>
 						</dl>
 
 						<dl>
-							<dt>Contact Number</dt>
+							<dt th:text="#{contactnumber.title}"></dt>
 							<dd th:text="${cd.cNo}"></dd>
 						</dl>
 
 						<dl>
-							<dt>Destination</dt>
+							<dt th:text="#{contactdest.title}"></dt>
 							<dd th:text="${cd.dest}"></dd>
 						</dl>
 
 						<dl>
-							<dt>About</dt>
+							<dt th:text="#{contactabout.title}"></dt>
 							<dd th:text="${cd.about}"></dd>
 						</dl>
 					</div>
@@ -107,7 +107,22 @@ dd {
 			</div>
 
 			<div class="card-footer"
-				style="width: px; height: 60px; background-color: white;"></div>
+				style="width: px; height: 60px; background-color: white;">
+				
+				                    <div style="margin-top:px;">
+                    <a class="ps-4 " th:href="@{/management/edit(no=${cd.cId})}" title="Edit" style="text-decoration: none;" th:text="#{edit.button.title}"> <span style="font-size: 20px; margin-right:25px; " class="bi bi-person-gear " ></span></a>
+                      
+                        <a class="ps-4" th:href=@{/management/delete(no1=${cd.cId})} title="Delete Contact" style="text-decoration: none;" th:text="#{delete.button.title}"><span style="font-size: 20px;" class="bi bi-trash-fill" ></span></a>
+                    
+                     <a class="ps-4" th:href=@{/contactManager/update/profile(uploadId=${cd.cId})} title="Change Profile" style="text-decoration: none;" th:text="#{changeprofile.button.title}"><span style="font-size: 20px;" class="bi bi-pencil-fill" ></span></a>
+                
+                   
+                    </div>
+         
+				 
+				
+				
+				</div>
 
 			<!-- Modal start  -->
 

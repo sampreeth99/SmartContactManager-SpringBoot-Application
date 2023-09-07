@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
@@ -17,14 +19,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
 import boot.app.addcontact.service.IAddContactService;
 import boot.app.contact.file.download.IContactFileDownloadService;
 import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
+import boot.app.repository.IContactDetailsRepository;
 import boot.app.validation.FormADDValidation;
+import boot.app.validation.FormEDITValidation;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,6 +52,16 @@ public class ContactManagementController {
 	
 	@Autowired
 	private IContactFileDownloadService downService;
+	
+	@Autowired
+	private IEditContactService editService;
+	
+	@Autowired
+	private IContactDetailsRepository repo;
+	
+	@Autowired
+	private FormEDITValidation validEdit;
+	
 	
 	
 	
@@ -149,6 +166,76 @@ public class ContactManagementController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+
+	@PostMapping("/profilesave")
+	public String updateProfilePicture(@RequestParam("profile") MultipartFile profile, @RequestParam Integer uploadid) {
+		System.out.println("req param is::" + profile.getName());
+		System.out.println("uploadId::" + uploadid);
+
+		Optional<ContactDetails> op = repo.findById(uploadid);
+		ContactDetails cf = null;
+		if (op.isPresent()) {
+			cf = op.get();
+
+		}
+
+		ContactDetails c = new ContactDetails();
+		c.setCId(uploadid);
+		c.setCName(cf.getCName());
+		c.setCNickName(cf.getCNickName());
+		c.setCNo(cf.getCNo());
+		c.setAbout(cf.getAbout());
+		c.setDest(cf.getDest());
+		Boolean f = fileUpService.uploadProfilePicToServerFolder(profile, c);
+		System.out.println("change profile result::" + f);
+
+		return "redirect:moreContactInfo?cid="+uploadid;
+	}
+
+	
+	
+
+	@GetMapping("/edit")
+	public String showEditFormPage(@ModelAttribute("cm") ContactDetails con, @RequestParam Integer no) {
+		// Object[] or=showService.showParticularDetails(no);
+
+		ContactDetails d = showService.getAllContactDetailsById(no);
+		BeanUtils.copyProperties(d, con, "profilePicPath", "originalPicName");
+
+		// System.out.println("From edit link:::"+obj);
+		System.out.println("ContactManagementController.showEditFormPage()");
+		return "editForm";
+	}
+
+	@PostMapping("/edit/submit")
+	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con, Map<String, Object> map,
+			RedirectAttributes r,BindingResult errors) {
+
+		if (validEdit.supports(ContactDetails.class)) {
+			validEdit.validate(con, errors);
+
+			if (errors.hasErrors()) {
+				System.out.println("Error count==" + errors.getErrorCount());
+				System.out.println(errors.getFieldError().toString());
+				return "editForm";
+			}
+		}
+		
+		System.out.println("from edit submit::" + con);
+
+		String oname = downService.oNameOfPic(con.getCId());
+		String p = downService.getPaths(con.getCId());
+
+		con.setOriginalPicName(oname);
+		con.setProfilePicPath(p);
+
+		String editmsg = editService.editContactById(con);
+		map.put("editMsg", editmsg);
+		r.addFlashAttribute("editMsg", editmsg);
+		return "welcome";
+
 	}
 
 

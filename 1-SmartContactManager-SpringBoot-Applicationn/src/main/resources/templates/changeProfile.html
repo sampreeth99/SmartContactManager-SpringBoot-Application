@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="index::base(~{::body})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+div{
+text-align: center;
+}
+</style>
+
+<script type="text/javascript">
+
+function CheckFileInput() {
+	var file =  document.getElementById('file');
+	console.log(file.files);
+	
+	}
+
+
+</script>
+</head>
+<body class="text-center">
+
+      <h1 style="margin-top: 20px; margin-left: -30px;" th:text="#{profile.change.heading}"></h1>
+      
+      <form th:action="@{/management/profilesave(uploadid=${uploadid})}" method="post" style="margin-top: 30px; font-size: 20px;" enctype="multipart/form-data">
+         
+         <input  type="hidden" th:value="${uploadid}" name="uploadid">
+         
+         <input  accept=".jpg"  type="file"  id="file" name="profile">
+      
+         <button onsubmit="CheckFileInput()"   class="btn btn-primary" th:text="#{button.form.submit}"></button>
+      </form> 
+      
+</body>
+</html>

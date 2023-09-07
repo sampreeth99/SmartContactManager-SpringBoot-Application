@@ -136,9 +136,9 @@ function EmptyResult() {
 			style="width: 1490px; background-color: grey; height: 580px; font-size: 25px; position: relative;">
 			<thead>
 				<tr class="thead-tr">
-					<th >Sno</th>
-					<th class="text-center" >Contact Name</th>
-					<th >Contact Number</th>
+					<th th:text="#{sno.title}"></th>
+					<th class="text-center" th:text="#{contactname.title}"></th>
+					<th th:text="#{contactnumber.title}"></th>
 					<th>&nbsp</th>
 				</tr>
 			</thead>
@@ -150,7 +150,7 @@ function EmptyResult() {
 					<td><a
 					 th:href="@{/management/moreContactInfo(cid=${con.cId})}"
 						
-						style="text-decoration: none;">more...</a></td>
+						style="text-decoration: none;" th:text="#{more.hyper.link.title}"></a></td>
 
 				</tr >
 
@@ -163,7 +163,7 @@ function EmptyResult() {
 			<li th:if="${currPageNo != 0}" class="page-item"><a
 				class="page-link"
 				th:href="@{'/management/showAllContactsByPage?page='+${currPageNo-1}}"
-				>Previous</a></li>
+				 th:text="#{pagination.previous.title}"></a></li>
 			<li th:classappend="${currPageNo==p-1?'active':''}" class="page-item"
 				th:each="p:${#numbers.sequence(1,8,1)}"><a class="page-link"
 				th:href="@{'/management/showAllContactsByPage?page='+${p-1}}"
@@ -172,7 +172,7 @@ function EmptyResult() {
 			<li th:if="${currPageNo+1 != totalPages}" class="page-item"><a
 				class="page-link"
 				th:href="@{'/management/showAllContactsByPage?page='+${currPageNo+1}}"
-				>Next</a></li>
+				 th:text="#{pagination.next.title}"></a></li>
 
 		</ul>
 		<img alt="" src="" style="display: flex;">
