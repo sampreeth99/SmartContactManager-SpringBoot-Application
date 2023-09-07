@@ -57,7 +57,15 @@ public class ContactManagementController {
 	@Autowired
 	private IEditContactService editService;
 	
+	@Autowired
 	private IDeleteContactService deleteService;
+	
+	@Autowired
+	private FormEDITValidation validEdit;
+	
+	@Autowired
+	private IContactDetailsRepository repo;
+	
 	
 	
 	
