@@ -36,7 +36,7 @@ public class FileUploadIMPLService implements FileUploadAddContactService {
 		
 	   boolean uploaded=false;
 		try {
-			String destf="C:\\Smart-Contact-Manager-Spring_Boot-App\\1-SmartContactManager-SpringBoot-Project-1\\src\\main\\webapp\\images";
+			String destf="C:\\Users\\sampreeth\\git\\SmartContactManager-SpringBoot-Application\\1-SmartContactManager-SpringBoot-Applicationn\\src\\main\\webapp\\images";
 			Files.copy(profile.getInputStream(),Paths.get(destf+File.separator+oName),StandardCopyOption.REPLACE_EXISTING);
 			uploaded=true;
 			contactDetails.setProfilePicPath(Paths.get(destf+File.separator+oName).toString());
