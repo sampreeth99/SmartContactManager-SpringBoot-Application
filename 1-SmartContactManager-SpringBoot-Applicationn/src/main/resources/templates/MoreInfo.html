@@ -111,8 +111,6 @@ dd {
 				
 				                    <div style="margin-top:px;">
                     <a class="ps-4 " th:href="@{/management/edit(no=${cd.cId})}" title="Edit" style="text-decoration: none;" th:text="#{edit.button.title}"> <span style="font-size: 20px; margin-right:25px; " class="bi bi-person-gear " ></span></a>
-                      
-                        <a class="ps-4" th:href=@{/management/delete(no1=${cd.cId})} title="Delete Contact" style="text-decoration: none;" th:text="#{delete.button.title}"><span style="font-size: 20px;" class="bi bi-trash-fill" ></span></a>
                     
                      <a class="ps-4" th:href=@{/contactManager/update/profile(uploadId=${cd.cId})} title="Change Profile" style="text-decoration: none;" th:text="#{changeprofile.button.title}"><span style="font-size: 20px;" class="bi bi-pencil-fill" ></span></a>
                 

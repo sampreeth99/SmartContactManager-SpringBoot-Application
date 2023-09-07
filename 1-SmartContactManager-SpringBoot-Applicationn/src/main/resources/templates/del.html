@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="index::base(~{::body})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+div{
+text-align: center;
+}
+</style>
+</head>
+<body>
+<div >
+ <h1 th:text="${delMsg}"></h1>
+</div>
+
+<div>
+ <h4 th:text="${note}"></h4>
+</div>
+
+</body>
+</html>
