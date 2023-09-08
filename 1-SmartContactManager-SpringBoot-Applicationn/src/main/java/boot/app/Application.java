@@ -5,6 +5,7 @@ import java.util.Locale;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
@@ -26,6 +27,15 @@ public class Application {
 		l.setParamName("lang");
 		return l;
 	}
+	
+	
+
+	@Bean
+	public BCryptPasswordEncoder createEncoder() {
+		BCryptPasswordEncoder b=new BCryptPasswordEncoder();
+		return b;
+	}
+	
 	
 
 

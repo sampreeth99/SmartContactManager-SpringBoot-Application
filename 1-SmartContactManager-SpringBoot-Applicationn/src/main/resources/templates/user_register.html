@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="commonindex::base(~{::body})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+
+<body class="bg-dark text-center" >
+	<div >
+
+
+
+		<div
+			class="card  text-danger fw-bold mt-4  text-center border-danger"
+			style="width: 400px; line-height: 20px; border-radius: 50px; background-color: pink;box-shadow: 18px 15px 5px grey;margin-left: 100px;">
+			<div class="card-header">
+				<h3>Sign Up</h3>
+			</div>
+
+			<div class="card-body ">
+				<div class="text-center text-white">
+					<h5 style="font-weight: bold; font-family: cursive; color: black">
+						<span th:text="${editMsg}"></span>
+					</h5>
+				</div>
+
+
+
+				<form th:action="@{/user/doRegistration}" method="post"
+					th:object="${us}">
+					
+
+					<div>
+						<label for="cName" > User Name </label>
+						<div>
+							<input type="text"  class="form-control " th:field="*{uName}">
+									
+						</div>
+						 <p class="text-dark" th:if="${#fields.hasErrors('uName')}"
+								th:errors="*{uName}" />
+						
+							</div>
+
+					<div>
+						<label for="cNickName"  > password </label>
+						<div id="input">
+							<input class="form-control" type="text" onblur="CheckNickNameInput()" th:field="*{pwd}">
+							
+						</div>
+						
+						 <p class="text-dark" th:if="${#fields.hasErrors('pwd')}"
+								th:errors="*{pwd}" />
+						
+					</div>
+
+
+					<div>
+						
+						Roles
+						<br>
+						<input type="checkbox" th:value="User" th:field="*{roles}">User
+						<input type="checkbox" th:value="Admin" th:field="*{roles}">Admin
+						
+						 <p class="text-dark" th:if="${#fields.hasErrors('roles')}"
+								th:errors="*{roles}" />
+						
+						
+						
+					</div>
+					
+
+                  <button class="btn btn-dark w-100 mt-2" >SignUp</button>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+		integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+		crossorigin="anonymous"></script>
+</body>
+</html>
+

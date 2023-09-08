@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/contactManager")
 public class SmartContactMiscellaneousController {
 	
+	
+	@GetMapping("/common")
+	public String getCommon() {
+		return "common_welcome";
+	}
 
 	@GetMapping("/")
 	public String getIndex(Map<String, Object> map) {

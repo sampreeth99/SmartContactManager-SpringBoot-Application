@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="login_index::base(~{::body})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+ <h2 th:if="${param.logout}" style="margin-left: 150px;">Logged out Succesfully</h2>
+
+</div>
+
+<div>
+ <h2 th:if="${param.error}">Invalid User Credentials</h2>
+
+</div>
+
+					
+				
+				<div
+			class="card  text-danger fw-bold mt-4  text-center border-danger"
+			style="width: 400px; line-height: 20px; border-radius: 50px; background-color: pink;box-shadow: 18px 15px 5px grey;margin-left: 100px;">
+			<div class="card-header">
+				
+				<form th:action="@{/login}" method="post">
+				
+				
+					<div>
+						<label for="cName" > User Name </label>
+						<div>
+							<input type="text"  class="form-control " name="username">
+									
+						</div>
+					
+					</div>
+
+					<div>
+						<label for="cNickName"  > password </label>
+						<div id="input">
+							<input class="form-control" type="text"  name="password">
+							
+						</div>
+						
+					</div>
+					
+					<div>
+					
+					<input type="checkbox" name="remember-me" >Remember me 
+					
+					</div>
+
+
+					
+
+                  <button class="btn btn-dark w-100 mt-2" >Login</button>
+				</form>
+				
+				<br>
+				<div>
+				<p>Dont have Account ? Sign Up Now</p>
+				<a th:href="@{/user/register}">Sing Up</a>
+				
+				</div>
+				
+				
+			
+		
+				
+
+
+
+</body>
+</html>
